@@ -35,7 +35,7 @@ export default function HomeScreen() {
         <ThemedView style={styles.heroSection}>
           <AnimatedIcon />
           <ThemedText type="title" style={styles.title}>
-            MOB-003 GoalPlanner
+            MOB-003 GoalPlanner // Zmiana ekranu startowego dla projektu MOB-003
           </ThemedText>
         </ThemedView>
 

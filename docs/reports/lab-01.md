@@ -56,12 +56,15 @@ npx expo start
 (Pełna instrukcja instalacji znajduje się w głównym pliku README.md w repozytorium projektu)
 ```
 
-**Wynik uruchomienia:** [opis i link do zrzutu ekranu]  
-**Weryfikacja po zmianie ekranu:** [co zmieniono i co zaobserwowano]
+**Wynik uruchomienia:** Aplikacja pomyślnie uruchomiła się na fizycznym urządzeniu mobilnym przy użyciu aplikacji Expo Go. Po aktualizacji zależności do SDK 58 rozwiązano problem niekompatybilności. Zrzut ekranu przedstawia działającą aplikację:
+![Ekran startowy](../docs/images/screen_start.jpg)
+
+**Weryfikacja po zmianie ekranu:** W pliku źródłowym zmieniono domyślny tekst powitalny na `MOB-003 – GoalPlanner`. Dzięki mechanizmowi Fast Refresh w środowisku Expo, po zapisaniu pliku zmiana natychmiast odświeżyła się na ekranie telefonu bez konieczności ręcznego restartu serwera: ![Ekran po zmianie](../docs/images/screen_changeName.jpg)
 
 ## 5. Praca z Git
 
-- **Issue:** [link]
+- **Issue:** [Przygotowanie środowiska i ekranu startowego.
+  ](https://github.com/EllaLavreniuk/MOB-003-GoalPlanner/issues/1#issue-6152022349)
 - **Gałąź:** [nazwa]
 - **Pull Request:** [link]
 - **Commit(y):** [hash/link]
