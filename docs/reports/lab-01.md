@@ -56,48 +56,42 @@ npx expo start
 (Pełna instrukcja instalacji znajduje się w głównym pliku README.md w repozytorium projektu)
 ```
 
-**Wynik uruchomienia:** [opis i link do zrzutu ekranu]  
-**Weryfikacja po zmianie ekranu:** [co zmieniono i co zaobserwowano]
+**Wynik uruchomienia:** Aplikacja pomyślnie uruchomiła się na fizycznym urządzeniu mobilnym przy użyciu aplikacji Expo Go. Po aktualizacji zależności do SDK 58 rozwiązano problem niekompatybilności. Zrzut ekranu przedstawia działającą aplikację:
+![Ekran startowy](../docs/images/screen_start.jpg)
+
+**Weryfikacja po zmianie ekranu:** W pliku źródłowym zmieniono domyślny tekst powitalny na `MOB-003 – GoalPlanner`. Dzięki mechanizmowi Fast Refresh w środowisku Expo, po zapisaniu pliku zmiana natychmiast odświeżyła się na ekranie telefonu bez konieczności ręcznego restartu serwera: ![Ekran po zmianie](../docs/images/screen_changeName.jpg)
 
 ## 5. Praca z Git
 
-- **Issue:** [link]
-- **Gałąź:** [nazwa]
-- **Pull Request:** [link]
-- **Commit(y):** [hash/link]
-- **Samoocena PR:** [co zostało sprawdzone]
-- **Stan `main` po scaleniu:** [wynik]
+- **Issue:** (https://github.com/EllaLavreniuk/MOB-003-GoalPlanner/issues/1#issue-6152022349)
+- **Gałąź:** `feature/initial-screen`
+- **Pull Request:** (https://github.com/EllaLavreniuk/MOB-003-GoalPlanner/pull/2)
+- **Commit(y):** (https://github.com/EllaLavreniuk/MOB-003-GoalPlanner/commits/main/)
+- **Samoocena PR:** Zgodnie z wymaganiami zweryfikowano, czy aplikacja uruchamia się lokalnie po aktualizacji wersji SDK do 58. Sprawdzono, czy zmieniony tekst (`MOB-003 – GoalPlanner`) wyświetla się prawidłowo i czy kod nie zawiera ukrytych danych wrażliwych ani zbędnych plików (poprawny `.gitignore`).
+- **Stan `main` po scaleniu:** Kod został pomyślnie zintegrowany z gałęzią główną `main`. Aplikacja po scaleniu kompiluje się bez błędów, a historia repozytorium jest spójna i zawiera udokumentowany proces zmiany ekranu startowego.
 
 ## 6. Dyskusja
 
-**Wybór technologii dla scenariusza zespołu:** [framework]  
-**Dwa argumenty:** [1], [2]  
-**Największe ryzyko:** [opis]  
-**Co mogłoby zmienić decyzję:** [warunek]
+**Wybór technologii dla scenariusza zespołu:** `React Native`
+**Dwa argumenty:** Brak bariery wejścia i optymalizacja budżetu – zespół doskonale zna już TypeScript i React, co przy krótkim terminie (6 miesięcy) pozwala na natychmiastowe rozpoczęcie prac bez konieczności nauki nowego języka. Dojrzały ekosystem dla wymaganych funkcji – React Native dysponuje sprawdzonymi bibliotekami do realizacji wszystkich kluczowych wymagań scenariusza: aparatu, geolokalizacji oraz lokalnego trybu offline.
+**Największe ryzyko:** Zależność od bibliotek trzecich przy dostępie do sprzętu. Ponieważ funkcje takie jak aparat czy GPS bazują na zewnętrznych pakietach open-source, istnieje ryzyko, że w perspektywie dwuletniego utrzymania przestaną być one aktualizowane, a zespół bez znajomości języków natywnych (Java/Swift) będzie miał trudności z ich naprawą po aktualizacjach systemów.  
+**Co mogłoby zmienić decyzję:** Zmienił(a)bym decyzję na Flutter, gdyby aplikacja miała opierać się na wysoce niestandardowym interfejsie pełnym złożonych animacji, który musi wyglądać w 100% identycznie na każdym urządzeniu.
 
 ## 7. Problemy i rozwiązania
 
-| Problem / objaw            | Hipoteza przyczyny | Działanie | Wynik |
-| -------------------------- | ------------------ | --------- | ----- |
-| [opis lub „nie wystąpiły”] |                    |           |       |
+| Problem / objaw| Hipoteza przyczyny| Działanie | Wynik |
+| Błąd `Project is incompatible with this version of Expo Go` na telefonie. | Wersja aplikacji Expo Go (SDK 58) jest nowsza niż szablon wygenerowany na komputerze (SDK 57). | Aktualizacja środowiska za pomocą `npm install expo@latest` i wyrównanie pakietów przez `npx expo install --fix`. | Aplikacja na telefonie uruchomiła się pomyślnie. |
+| Błąd `ERESOLVE could not resolve` podczas aktualizacji pakietów. | Konflikt zależności wewnątrz paczek przy przeskoku z SDK 57 na SDK 58. | Wywołanie polecenia naprawczego z flagą wymuszającą zignorowanie ścisłych konfliktów: `--legacy-peer-deps`. | Wymagane zależności zainstalowały się poprawnie. |
+| Błąd sieciowy `ECONNRESET` w trakcie pobierania pakietów npm. | Zrywanie połączenia z rejestrem npm przez lokalną sieć Wi-Fi lub blokada TLS. | Zmiana dostawcy internetu (hotspot mobilny) oraz wyczyszczenie pamięci podręcznej przez `npm cache clean --force`. | Pakiety pobrane i dodane do `node_modules` bez przerw. |
 
 ## 8. Wnioski
 
-1. [Czego dowiedziałem(-am) się o technologii?]
-2. [Które założenie okazało się nietrafne lub wymaga sprawdzenia?]
-3. [Co należy zrobić przed laboratorium 2?]
+1. Ekosystem React Native przy użyciu Expo wymaga bardzo ścisłej kontroli wersji między środowiskiem uruchomieniowym (aplikacją na urządzeniu) a kodem źródłowym. Narzędzia takie jak `npx expo install --fix` są kluczowe w zarządzaniu tymi zależnościami.
+2. Założenie, że nowo wygenerowany projekt (przez `npx create-expo-app`) będzie automatycznie w 100% kompatybilny z najnowszą wersją aplikacji na telefonie, okazało się nietrafne. Zmusiło to do przeprowadzenia głębszej aktualizacji zaraz po inicjalizacji.
+3. Przed laboratorium 2 należy zaplanować wstępną strukturę katalogów aplikacji oraz przeanalizować mechanizmy nawigacji (np. Expo Router), aby przygotować grunt pod implementację modeli danych `Cel` i `Kamień milowy`.
 
 ## 9. Użycie narzędzi AI (jeżeli dotyczy)
 
-**Narzędzie i zakres wsparcia:** [np. wyjaśnienie błędu konfiguracji / propozycja porównania]  
-**Jak zweryfikowano wynik:** [dokumentacja, uruchomienie, test]  
-**Elementy wykonane samodzielnie:** [opis]
-
-## 10. Checklista oddania
-
-- [ ] Porównanie trzech frameworków.
-- [ ] ADR wyboru technologii.
-- [ ] Uruchomiona aplikacja i instrukcja w README.
-- [ ] Issue, gałąź i scalony PR.
-- [ ] Linki do dowodów i historia pracy.
-- [ ] Problemy, wnioski i deklaracja AI (jeżeli dotyczy).
+**Narzędzie i zakres wsparcia:** Wykorzystano model językowy (AI) w roli asystenta do diagnozy i rozwiązywania błędów konfiguracyjnych środowiska (niezgodność wersji Expo SDK 57 i 58), omijania problemów sieciowych podczas pobierania pakietów npm (`ECONNRESET`, konflikty `ERESOLVE`) oraz wsparcia w zakresie poprawnej składni poleceń Git.  
+**Jak zweryfikowano wynik:** Wygenerowane podpowiedzi i komendy były na bieżąco weryfikowane poprzez ich uruchomienie w terminalu VS Code, co doprowadziło do udanej kompilacji i uruchomienia aplikacji na fizycznym urządzeniu (Expo Go). Weryfikacja Git odbyła się poprzez sprawdzenie statusu repozytorium, zgłoszeń (Issues) i Pull Requestów bezpośrednio na platformie GitHub.  
+**Elementy wykonane samodzielnie:** Samodzielnie przeanalizowano specyfikację biznesową projektu (MOB-003 – GoalPlanner), zainicjowano projekt, zmodyfikowano kod źródłowy ekranu startowego (`index.tsx`), wykonano zrzuty ekranu.
